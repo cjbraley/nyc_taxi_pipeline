@@ -29,6 +29,11 @@ with DAG(
     default_args=default_args
 ) as dag:
 
+    task_dbt_deps = BashOperator(
+        task_id='dbt_deps',
+        bash_command=f"cd {DBT_TAXI_DIR} && dbt deps"
+    )
+
     task_dbt_run = BashOperator(
         task_id='dbt_run',
         bash_command=f"cd {DBT_TAXI_DIR} && dbt run"
@@ -39,4 +44,4 @@ with DAG(
         bash_command=f"cd {DBT_TAXI_DIR} && dbt test"
     )
 
-    task_dbt_run >> task_dbt_test
+    task_dbt_deps >> task_dbt_run >> task_dbt_test

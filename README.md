@@ -88,37 +88,39 @@ Instructions
 
 1. Clone this repository
 2. Create a new project in GCP
-3. Create a service account
+3. Enable the Cloud Dataproc API
+   * Go to Dataproc from the menu
+4. Create a service account
    * Go to IAM & Admin > Service Accounts
    * Choose "Create Service Account"
-4. Give the service account necessary permissions
+5. Give the service account necessary permissions
    * Do this as the account is created or go to IAM & Admin > Service Accounts
    * Grant the following permissions:
       * Service Account User
       * Storage Admin
       * Storage Object Admin
       * BigQuery Admin
-      * Compute Admin
       * Dataproc Administrator
-4. Generate key file
+6. Generate key file
    * Go to IAM & Admin > Service Accounts
    * Click on your service account
    * Go to the keys tab
    * Choose "ADD KEY" > "Create new key"
    * Choose the JSON option
-5. Copy the key file to desired directory
+7. Copy the key file to desired directory
    * Put the generated key file into a suitable directory
    * Project default is in the project root under .credentials/google/key.json
-6. Set environment variables
+8. Set environment variables
    * Rename .env-example to .env
    * Update values to match your setup
-7. Build infrastructure with Terraform
+9. Build infrastructure with Terraform
    * run "make infra-init"
    * run "make infra-run command=apply"
-8. Init & run airflow
+1. Init & run airflow
    * run "make init"
    * run "make up"
    * default port is 8080
-9. Enable DAGs
-   * Make sure dbt DAG is run last
-11. Optional: Connect to BigQuery and create visualisation in Looker Studio or similar
+1. Enable DAGs
+   * Ingest > Transform > BQ Tables > DBT
+   * When backfilling, set the CREATE_DESTROY_INFRA variable to false to avoid creating and destroying the cluster on every run
+1. Optional: Connect to BigQuery and create visualisation in Looker Studio or similar
